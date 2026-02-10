@@ -23,5 +23,7 @@ terraform -v
 ## Create bucket manually and update bucket name in backend.tf
 
 terraform init
+
 terraform plan
+
 terraform apply
