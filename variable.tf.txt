@@ -2,7 +2,7 @@
 variable "project" {
     type = string
     description = "The project ID to manage the resources"
-    default = "coversure-infra-stage"
+    default = "project-name"
 }
 
 variable "region" {
@@ -16,4 +16,5 @@ variable "zone" {
     description = "The zone of the resources"
     default = "asia-south1-a"
 }
+
 
