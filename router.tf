@@ -5,4 +5,3 @@ resource "google_compute_router" "router" {
   network = google_compute_network.main.id
   project = var.project
 }
-
