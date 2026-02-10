@@ -1,5 +1,5 @@
 resource "google_compute_router_nat" "nat" {
-  name    = "coversure-stage-nat-gateway"
+  name    = "nat-gateway"
   router  = google_compute_router.router.name
   region  = var.region
   
@@ -25,3 +25,4 @@ resource "google_compute_address" "natstage" {
 
   depends_on = [google_project_service.compute]
 }
+
