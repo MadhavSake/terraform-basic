@@ -1,6 +1,6 @@
 # https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_network
 resource "google_compute_network" "main" {
-  name                            = "test-vpc"
+  name                            = "var.vpc_name"
   routing_mode                    = "REGIONAL"
   auto_create_subnetworks         = false
   mtu                             = 1460
@@ -11,3 +11,4 @@ resource "google_compute_network" "main" {
     google_project_service.container
   ]
 }
+
