@@ -1,6 +1,6 @@
 //registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_firewall
 resource "google_compute_firewall" "firewall-allow-ssh" {
-  name    = "var.firewall_name"
+  name    = var.firewall_name
   network = google_compute_network.main.name
 
   allow {
@@ -27,3 +27,4 @@ resource "google_compute_firewall" "firewall-allow-tcp" {
   target_tags   = ["http-server"]
 
 }
+
