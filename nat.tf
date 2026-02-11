@@ -1,5 +1,5 @@
 resource "google_compute_router_nat" "nat" {
-  name    = "nat-gateway"
+  name    = var.nat_name
   router  = google_compute_router.router.name
   region  = var.region
   
@@ -25,4 +25,5 @@ resource "google_compute_address" "natstage" {
 
   depends_on = [google_project_service.compute]
 }
+
 
