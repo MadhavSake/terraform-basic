@@ -1,8 +1,7 @@
-
 variable "project" {
     type = string
     description = "The project ID to manage the resources"
-    default = "project-name"
+    default = "automation-480006"
 }
 
 variable "region" {
@@ -17,4 +16,20 @@ variable "zone" {
     default = "asia-south1-a"
 }
 
+variable "vpc_name" {
+  type        = string
+  description = "Name of the VPC network"
+  default     = "test-vpc"
+}
 
+variable "nat_name" {
+  type        = string
+  description = "Name of the VPC network"
+  default     = "test-nat"
+}
+
+variable "firewall_name" {
+  type        = string
+  description = "Name of the VPC network"
+  default     = "test-firewall"
+}
