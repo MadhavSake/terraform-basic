@@ -2,7 +2,7 @@
 # https://registry.terraform.io/providers/hashicorp/google/latest/docs
 # Set your GCP project ID and region
 provider "google" {
-  credentials = file("project-service-account-key.json")
+  credentials = file("gcp-project-service-account-json-key.json")
   project     = var.project
   region      = var.region
   zone        = var.zone
@@ -22,3 +22,4 @@ resource "google_project_service" "container" {
 resource "google_project_service" "cloudresourcemanager" {
   service = "cloudresourcemanager.googleapis.com"
 }
+
