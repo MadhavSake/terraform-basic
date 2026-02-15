@@ -3,7 +3,7 @@
 ############################################
 
 resource "google_container_cluster" "primary" {
-  name     = "${var.project}-gke-cluster"
+  name     = var.gke_name
   location = var.zone
   project  = var.project
 
