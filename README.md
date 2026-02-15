@@ -1,4 +1,4 @@
-Create one VM(Ubuntu) and run the following commands on vm.
+Create one VM(Ubuntu) and run the following commands on vm
 
 #For ubuntu 
 
