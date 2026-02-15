@@ -22,7 +22,7 @@ resource "google_container_cluster" "primary" {
   }
 
   depends_on = [
-    google_project_service.container
+    google_project_service.container,
   ]
 }
 
@@ -44,14 +44,13 @@ resource "google_container_node_pool" "test_node_pool" {
   }
 
   node_config {
-    machine_type   = "e2-medium"
-    spot           = true
+    machine_type = "e2-medium"
+    spot         = true
 
-    # ✅ Dedicated Service Account
     service_account = google_service_account.gke_nodes.email
 
     oauth_scopes = [
-      "https://www.googleapis.com/auth/cloud-platform"
+      "https://www.googleapis.com/auth/cloud-platform",
     ]
 
     metadata = {
@@ -60,6 +59,6 @@ resource "google_container_node_pool" "test_node_pool" {
   }
 
   depends_on = [
-    google_service_account.gke_nodes
+    google_service_account.gke_nodes,
   ]
 }
