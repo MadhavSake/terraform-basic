@@ -1,25 +1,15 @@
 ############################################
-# Enable Required API
-############################################
-
-resource "google_project_service" "container" {
-  service = "container.googleapis.com"
-  project = var.project
-}
-
-############################################
 # Cheapest GKE Cluster (POC)
 ############################################
 
 resource "google_container_cluster" "primary" {
   name     = "${var.project}-gke-cluster"
-  location = var.zone   # Zonal = cheaper
+  location = var.zone
   project  = var.project
 
   network    = google_compute_network.main.id
   subnetwork = google_compute_subnetwork.private_1.id
 
-  # Only 1 node
   remove_default_node_pool = false
   initial_node_count       = 1
 
@@ -32,10 +22,8 @@ resource "google_container_cluster" "primary" {
   }
 
   node_config {
-    machine_type = "e2-micro"   # cheapest machine
-
-    # Spot instance (very cheap)
-    spot = true
+    machine_type = "e2-micro"
+    spot         = true
 
     oauth_scopes = [
       "https://www.googleapis.com/auth/cloud-platform"
