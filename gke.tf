@@ -22,7 +22,7 @@ resource "google_container_cluster" "primary" {
   }
 
   node_config {
-    machine_type = "e2-micro"
+    machine_type = "e2-medium"
     spot         = true
 
     oauth_scopes = [
