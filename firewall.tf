@@ -1,6 +1,6 @@
 // Allow SSH (Ingress)
 resource "google_compute_firewall" "firewall_allow_ssh" {
-  name    = var.firewall_name
+  name    = "allow-ssh-firewall"
   network = google_compute_network.main.name
 
   allow {
@@ -17,7 +17,7 @@ resource "google_compute_firewall" "firewall_allow_ssh" {
 
 // Allow HTTP (Ingress)
 resource "google_compute_firewall" "firewall_allow_http" {
-  name    = "firewall-allow-tcp"
+  name    = "allow-tcp-firewall"
   network = google_compute_network.main.name
   project = var.project
 
@@ -53,3 +53,4 @@ resource "google_compute_firewall" "firewall_allow_egress_internet" {
     ports    = ["53"]
   }
 }
+
