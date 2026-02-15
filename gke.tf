@@ -11,7 +11,7 @@ resource "google_container_cluster" "primary" {
   subnetwork = google_compute_subnetwork.private_1.id
 
   remove_default_node_pool = false
-  initial_node_count       = 2
+  initial_node_count       = 1
 
   deletion_protection = false
   networking_mode     = "VPC_NATIVE"
