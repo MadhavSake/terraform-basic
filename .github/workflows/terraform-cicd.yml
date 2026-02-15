@@ -10,7 +10,9 @@ on:
 
 env:
   TF_VERSION: 1.6.6
-  GOOGLE_PROJECT: ${{ secrets.GCP_PROJECT_ID }}
+  TF_VAR_project: ${{ secrets.GCP_PROJECT_ID }}   # Automatically maps to var.project
+  TF_VAR_region: asia-south1
+  TF_VAR_zone: asia-south1-a
 
 jobs:
   terraform:
@@ -18,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout code
+      # Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -34,7 +36,7 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY_DEV }}
 
-      # Set up gcloud SDK
+      # Setup gcloud
       - name: Setup Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
         with:
@@ -42,7 +44,7 @@ jobs:
 
       # Terraform Init
       - name: Terraform Init
-        run: terraform init
+        run: terraform init -input=false
 
       # Terraform Format Check
       - name: Terraform Format
@@ -52,12 +54,12 @@ jobs:
       - name: Terraform Validate
         run: terraform validate
 
-      # Terraform Plan (Only on PR)
+      # Terraform Plan (PR only)
       - name: Terraform Plan
         if: github.event_name == 'pull_request'
-        run: terraform plan -var="project=${{ secrets.GCP_PROJECT_ID }}"
+        run: terraform plan -input=false
 
-      # Terraform Apply (Only on push to main)
+      # Terraform Apply (Push only)
       - name: Terraform Apply
         if: github.ref == 'refs/heads/cicd-with-gke' && github.event_name == 'push'
-        run: terraform apply -auto-approve -var="project=${{ secrets.GCP_PROJECT_ID }}"
+        run: terraform apply -auto-approve -input=false
