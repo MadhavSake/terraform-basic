@@ -1,13 +1,4 @@
 ############################################
-# Enable Required API
-############################################
-
-resource "google_project_service" "container" {
-  service = "container.googleapis.com"
-  project = var.project
-}
-
-############################################
 # GKE Cluster (Without Default Node Pool)
 ############################################
 
