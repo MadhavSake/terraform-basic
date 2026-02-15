@@ -33,3 +33,9 @@ variable "firewall_name" {
   description = "Name of the firewall rule"
   default     = "test-firewall"
 }
+
+variable "gke_name" {
+  type        = string
+  description = "The project ID to manage the resources"
+  default     = "test-gke-cluster"
+}
