@@ -62,7 +62,7 @@ jobs:
 
       # Terraform Plan (Pull Request only)
       - name: Terraform Plan
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' || github.event_name == 'push'
         run: terraform plan -input=false
 
       # Terraform Apply (Push to cicd-with-gke only)
