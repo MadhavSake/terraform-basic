@@ -3,10 +3,10 @@ name: Terraform CI/CD
 on:
   push:
     branches:
-      - main
+      - cicd-with-gke
   pull_request:
     branches:
-      - main
+      - cicd-with-gke
 
 env:
   TF_VERSION: 1.6.6
@@ -32,7 +32,7 @@ jobs:
       - name: Authenticate to GCP
         uses: google-github-actions/auth@v2
         with:
-          credentials_json: ${{ secrets.GCP_SA_KEY }}
+          credentials_json: ${{ secrets.GCP_SA_KEY_DEV }}
 
       # Set up gcloud SDK
       - name: Setup Cloud SDK
@@ -59,5 +59,5 @@ jobs:
 
       # Terraform Apply (Only on push to main)
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        if: github.ref == 'refs/heads/cicd-with-gke' && github.event_name == 'push'
         run: terraform apply -auto-approve -var="project=${{ secrets.GCP_PROJECT_ID }}"
