@@ -1,5 +1,5 @@
-//registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_firewall
-resource "google_compute_firewall" "firewall-allow-ssh" {
+// Allow SSH (Ingress)
+resource "google_compute_firewall" "firewall_allow_ssh" {
   name    = var.firewall_name
   network = google_compute_network.main.name
 
@@ -7,24 +7,49 @@ resource "google_compute_firewall" "firewall-allow-ssh" {
     protocol = "tcp"
     ports    = ["22"]
   }
+
+  direction     = "INGRESS"
   priority      = 65534
   project       = var.project
   source_ranges = ["0.0.0.0/0"]
 }
 
-resource "google_compute_firewall" "firewall-allow-tcp" {
+
+// Allow HTTP (Ingress)
+resource "google_compute_firewall" "firewall_allow_http" {
+  name    = "firewall-allow-tcp"
+  network = google_compute_network.main.name
+  project = var.project
+
   allow {
-    ports    = ["80"]
     protocol = "tcp"
+    ports    = ["80"]
   }
 
   direction     = "INGRESS"
-  name          = "firewall-allow-tcp"
-  network       = google_compute_network.main.name
   priority      = 1000
-  project       = var.project
   source_ranges = ["0.0.0.0/0"]
   target_tags   = ["http-server"]
-
 }
 
+
+// ✅ NEW: Allow Internet Egress (Required for GKE + NAT)
+resource "google_compute_firewall" "firewall_allow_egress_internet" {
+  name    = "allow-egress-internet"
+  network = google_compute_network.main.name
+  project = var.project
+
+  direction          = "EGRESS"
+  priority           = 1000
+  destination_ranges = ["0.0.0.0/0"]
+
+  allow {
+    protocol = "tcp"
+    ports    = ["80", "443"]
+  }
+
+  allow {
+    protocol = "udp"
+    ports    = ["53"]
+  }
+}
