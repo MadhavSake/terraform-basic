@@ -1,7 +1,7 @@
 variable "project" {
     type = string
     description = "The project ID to manage the resources"
-    default = "your-gcp-project-name"
+    default = "automation-480006"
 }
 
 variable "region" {
@@ -33,4 +33,5 @@ variable "firewall_name" {
   description = "Name of the VPC network"
   default     = "test-firewall"
 }
+
 
