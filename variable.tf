@@ -19,19 +19,19 @@ variable "zone" {
 variable "vpc_name" {
   type        = string
   description = "Name of the VPC network"
-  default     = "test-vpc"
+  default     = "test-vpc-gke"
 }
 
 variable "nat_name" {
   type        = string
   description = "Name of the NAT gateway"
-  default     = "test-nat"
+  default     = "test-nat=gke"
 }
 
 variable "firewall_name" {
   type        = string
   description = "Name of the firewall rule"
-  default     = "test-firewall"
+  default     = "test-firewall-gke"
 }
 
 variable "gke_name" {
