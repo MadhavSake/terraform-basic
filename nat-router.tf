@@ -2,8 +2,8 @@
 # Static External IP for NAT
 ############################################
 
-resource "google_compute_address" "natstage" {
-  name         = "natstage"
+resource "google_compute_address" "natstage-gke" {
+  name         = "natstage-gke"
   project      = var.project
   region       = var.region
   address_type = "EXTERNAL"
@@ -60,3 +60,4 @@ resource "google_compute_router_nat" "nat" {
     google_compute_router.router
   ]
 }
+
