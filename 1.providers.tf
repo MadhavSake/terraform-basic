@@ -14,18 +14,33 @@ provider "google" {
   region  = var.region
 }
 
+############################################
+# Enable Compute Engine API
+############################################
+
 resource "google_project_service" "compute" {
   project                    = var.project
   service                    = "compute.googleapis.com"
   disable_dependent_services = true
+  disable_on_destroy         = false
 }
+
+############################################
+# Enable Kubernetes Engine API
+############################################
 
 resource "google_project_service" "container" {
-  project = var.project
-  service = "container.googleapis.com"
+  project            = var.project
+  service            = "container.googleapis.com"
+  disable_on_destroy = false
 }
 
+############################################
+# Enable Cloud Resource Manager API
+############################################
+
 resource "google_project_service" "cloudresourcemanager" {
-  project = var.project
-  service = "cloudresourcemanager.googleapis.com"
+  project            = var.project
+  service            = "cloudresourcemanager.googleapis.com"
+  disable_on_destroy = false
 }
