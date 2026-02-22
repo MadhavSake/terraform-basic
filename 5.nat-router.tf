@@ -9,11 +9,6 @@ resource "google_compute_address" "nat_static_ip" {
   address_type = "EXTERNAL"
   network_tier = "PREMIUM"
 
-  # Prevent deletion of static IP on terraform destroy
-  lifecycle {
-    prevent_destroy = true
-  }
-
   depends_on = [
     google_project_service.compute
   ]
@@ -65,4 +60,5 @@ resource "google_compute_router_nat" "nat" {
     google_compute_router.router
   ]
 }
+
 
