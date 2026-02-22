@@ -43,7 +43,7 @@ resource "google_compute_router_nat" "nat" {
   nat_ip_allocate_option             = "MANUAL_ONLY"
 
   nat_ips = [
-    google_compute_address.natstage.self_link
+    google_compute_address.nat_static_ip.self_link
   ]
 
   subnetwork {
@@ -60,3 +60,4 @@ resource "google_compute_router_nat" "nat" {
     google_compute_router.router
   ]
 }
+
