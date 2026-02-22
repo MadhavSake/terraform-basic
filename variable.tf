@@ -1,7 +1,7 @@
 variable "project" {
   type        = string
   description = "The project ID to manage the resources"
-  default     = "your-gcp-project-name"
+  default     = "automation-480006"
 }
 
 variable "region" {
@@ -39,3 +39,4 @@ variable "gke_name" {
   description = "The project ID to manage the resources"
   default     = "test-gke-cluster"
 }
+
