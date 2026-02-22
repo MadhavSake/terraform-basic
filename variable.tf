@@ -25,7 +25,13 @@ variable "vpc_name" {
 variable "nat_name" {
   type        = string
   description = "Name of the NAT gateway"
-  default     = "test-nat=gke"
+  default     = "test-nat-gke"
+}
+
+variable "nat_static_ip" {
+  type        = string
+  description = "Name of the NAT gateway"
+  default     = "nat-static-ip"
 }
 
 variable "firewall_name" {
@@ -39,4 +45,3 @@ variable "gke_name" {
   description = "The project ID to manage the resources"
   default     = "test-gke-cluster"
 }
-
