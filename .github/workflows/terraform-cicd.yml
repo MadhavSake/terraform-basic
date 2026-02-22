@@ -63,7 +63,7 @@ jobs:
         #if: github.ref == 'refs/heads/cicd-with-gke' && github.event_name == 'push' 
         #run: terraform apply -auto-approve -input=false
 
-       Terraform Destroy (Runs on push to cicd-with-gke)
+       #Terraform Destroy (Runs on push to cicd-with-gke)
       - name: Terraform Destroy
         if: github.ref == 'refs/heads/cicd-with-gke' && github.event_name == 'push'
         run: terraform destroy -auto-approve -input=false
