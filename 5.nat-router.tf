@@ -24,7 +24,7 @@ resource "google_compute_address" "nat_static_ip" {
 ############################################
 
 resource "google_compute_router" "router" {
-  name    = "vpc-router"
+  name    = "vpc-router-gke"
   region  = var.region
   network = google_compute_network.main.id
   project = var.project
@@ -65,3 +65,4 @@ resource "google_compute_router_nat" "nat" {
     google_compute_router.router
   ]
 }
+
