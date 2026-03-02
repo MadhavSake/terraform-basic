@@ -11,7 +11,7 @@ Provision an AWS VPC in ap-south-1 using:
 AWS Account ID: your-aws-account-project-id-required
 Repository: MadhavSake/terraform-basic
 Branch: aws-basic
-bucket : bucket-name
+bucket : your-bucket-name
 
 
 
@@ -101,20 +101,20 @@ aws iam list-attached-role-policies \
 ## Create S3 Bucket
 
 aws s3api create-bucket \
-  --bucket bucket-name \
+  --bucket your-bucket-name \
   --region ap-south-1 \
   --create-bucket-configuration LocationConstraint=ap-south-1
 
 # Enable Versioning
 
 aws s3api put-bucket-versioning \
-  --bucket bucket-name \
+  --bucket your-bucket-name \
   --versioning-configuration Status=Enabled
 
 ## Enable Encryption
 
 aws s3api put-bucket-encryption \
-  --bucket bucket-name \
+  --bucket your-bucket-name \
   --server-side-encryption-configuration '{
     "Rules": [{
       "ApplyServerSideEncryptionByDefault": {
