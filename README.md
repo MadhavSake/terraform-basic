@@ -52,7 +52,7 @@ aws iam create-open-id-connect-provider \
 
   ## Step 2 – Create IAM Role for GitHub
 
-  # <your-project-name> replace this with your project name 
+  # replace this <your-project-name> value your project name
 
 
   cat <<EOF > trust-policy.json
