@@ -1,38 +1,17 @@
-variable "project" {
-    type = string
-    description = "The project ID to manage the resources"
-    default = "add-your-project-id"
+variable "aws_region" {
+  default = "ap-south-1"
 }
 
-variable "region" {
-    type = string
-    description = "The region of the resources"
-    default = "asia-south1"
+variable "vpc_cidr" {
+  default = "10.0.0.0/16"
 }
 
-variable "zone" {
-    type = string
-    description = "The zone of the resources"
-    default = "asia-south1-a"
+variable "public_subnet_cidrs" {
+  type    = list(string)
+  default = ["10.0.1.0/24", "10.0.2.0/24"]
 }
 
-variable "vpc_name" {
-  type        = string
-  description = "Name of the VPC network"
-  default     = "test-vpc"
+variable "private_subnet_cidrs" {
+  type    = list(string)
+  default = ["10.0.3.0/24", "10.0.4.0/24"]
 }
-
-variable "nat_name" {
-  type        = string
-  description = "Name of the VPC network"
-  default     = "test-nat"
-}
-
-variable "firewall_name" {
-  type        = string
-  description = "Name of the VPC network"
-  default     = "test-firewall"
-}
-
-
-
