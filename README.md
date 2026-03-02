@@ -8,10 +8,10 @@ Provision an AWS VPC in ap-south-1 using:
 #OIDC authentication (no access keys)
 #Remote state (S3 + DynamoDB)
 
-AWS Account ID: <your-aws-account-project-id-required>
+AWS Account ID: your-aws-account-project-id-required
 Repository: MadhavSake/terraform-basic
 Branch: aws-basic
-bucket : <bucket-name>
+bucket : bucket-name
 
 
 
@@ -48,12 +48,12 @@ aws iam create-open-id-connect-provider \
 
   ## Verify:
 
-  Expected: arn:aws:iam::<project-name>:oidc-provider/token.actions.githubusercontent.com
+  Expected: arn:aws:iam::project-name:oidc-provider/token.actions.githubusercontent.com
 
 
   ## Step 2 – Create IAM Role for GitHub
 
-  # replace this <your-project-name> value your project name
+  # replace this your-project-name value your project name
 
 
   cat <<EOF > trust-policy.json
@@ -63,7 +63,7 @@ aws iam create-open-id-connect-provider \
     {
       "Effect": "Allow",
       "Principal": {
-        "Federated": "arn:aws:iam::<your-project-name>:oidc-provider/token.actions.githubusercontent.com"
+        "Federated": "arn:aws:iam::your-project-name:oidc-provider/token.actions.githubusercontent.com"
       },
       "Action": "sts:AssumeRoleWithWebIdentity",
       "Condition": {
@@ -101,20 +101,20 @@ aws iam list-attached-role-policies \
 ## Create S3 Bucket
 
 aws s3api create-bucket \
-  --bucket <bucket-name> \
+  --bucket bucket-name \
   --region ap-south-1 \
   --create-bucket-configuration LocationConstraint=ap-south-1
 
 # Enable Versioning
 
 aws s3api put-bucket-versioning \
-  --bucket <bucket-name> \
+  --bucket bucket-name \
   --versioning-configuration Status=Enabled
 
 ## Enable Encryption
 
 aws s3api put-bucket-encryption \
-  --bucket <bucket-name> \
+  --bucket bucket-name \
   --server-side-encryption-configuration '{
     "Rules": [{
       "ApplyServerSideEncryptionByDefault": {
@@ -138,12 +138,12 @@ aws dynamodb list-tables --region ap-south-1
 
 ## add this bucket name in backend.tf line 3
 
- bucket         = "<your-bucket-name>"
+ bucket         = "your-bucket-name"
 
 ## File .github/workflows/terraform.yml Line number 26 update <your-project-name> 
 
 
-role-to-assume: arn:aws:iam::<your-project-name>:role/GitHubActionsTerraformRole
+role-to-assume: arn:aws:iam::your-project-name:role/GitHubActionsTerraformRole
 
 --------------------------------------------------------------------------------------------------------------------------
 
