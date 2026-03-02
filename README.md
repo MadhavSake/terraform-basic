@@ -3,7 +3,7 @@
 
 Provision an AWS VPC in ap-south-1 using:
 
-#Terraform
+#Terraform:
 #GitHub Actions CI/CD
 #OIDC authentication (no access keys)
 #Remote state (S3 + DynamoDB)
