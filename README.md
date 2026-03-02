@@ -160,3 +160,15 @@ role-to-assume: arn:aws:iam::your-project-name:role/GitHubActionsTerraformRole
       - name: Terraform Destroy
         if: github.ref == 'refs/heads/aws-basic'
         run: terraform destroy -auto-approve
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+## verify and update branch name .github/workflows/terraform.yml
+
+on:
+  push:
+    branches:
+      - aws-basic
+  pull_request:
+    branches:
+      - aws-basic
