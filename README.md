@@ -8,14 +8,14 @@ Provision an AWS VPC in ap-south-1 using:
 #OIDC authentication (no access keys)
 #Remote state (S3 + DynamoDB)
 
+# Required 
 AWS Account ID: your-aws-account-project-id-required
 Repository: MadhavSake/terraform-basic
 Branch: aws-basic
 bucket : your-bucket-name
 
 
-
-## Resources:
+## Resources will create :
 
 1 VPC
 2 Public Subnets
@@ -46,9 +46,9 @@ aws iam create-open-id-connect-provider \
   --thumbprint-list 6938fd4d98bab03faadb97b34396831e3780aea1
 
 
-  ## Verify:
+## Verify:
 
-  Expected: arn:aws:iam::project-name:oidc-provider/token.actions.githubusercontent.com
+Expected: arn:aws:iam::project-name:oidc-provider/token.actions.githubusercontent.com
 
 
   ## Step 2 – Create IAM Role for GitHub
