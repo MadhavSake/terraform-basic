@@ -136,4 +136,9 @@ aws dynamodb list-tables --region ap-south-1
 
 ## add this bucket name in backend.tf
 
+
+## Line number 26 update your-project-name
+
+role-to-assume: arn:aws:iam::<your-project-name>:role/GitHubActionsTerraformRole
+
 ---------------------------------------------------------------------------------------------------
