@@ -51,6 +51,9 @@ aws iam create-open-id-connect-provider \
 
   ## Step 2 – Create IAM Role for GitHub
 
+  # <your-project-name> replace this with your project name 
+
+
   cat <<EOF > trust-policy.json
 {
   "Version": "2012-10-17",
@@ -58,7 +61,7 @@ aws iam create-open-id-connect-provider \
     {
       "Effect": "Allow",
       "Principal": {
-        "Federated": "arn:aws:iam::582802577279:oidc-provider/token.actions.githubusercontent.com"
+        "Federated": "arn:aws:iam::<your-project-name>:oidc-provider/token.actions.githubusercontent.com"
       },
       "Action": "sts:AssumeRoleWithWebIdentity",
       "Condition": {
@@ -96,20 +99,20 @@ aws iam list-attached-role-policies \
 ## Create S3 Bucket
 
 aws s3api create-bucket \
-  --bucket madhav-terraform-state-582802577279 \
+  --bucket <bucket-name> \
   --region ap-south-1 \
   --create-bucket-configuration LocationConstraint=ap-south-1
 
 # Enable Versioning
 
 aws s3api put-bucket-versioning \
-  --bucket madhav-terraform-state-582802577279 \
+  --bucket <bucket-name> \
   --versioning-configuration Status=Enabled
 
 ## Enable Encryption
 
 aws s3api put-bucket-encryption \
-  --bucket madhav-terraform-state-582802577279 \
+  --bucket <bucket-name> \
   --server-side-encryption-configuration '{
     "Rules": [{
       "ApplyServerSideEncryptionByDefault": {
