@@ -10,6 +10,7 @@ Remote state (S3 + DynamoDB)
 AWS Account ID: <your-aws-account-project-id-required>
 Repository: MadhavSake/terraform-basic
 Branch: aws-basic
+bucket : <bucket-name>
 
 
 
@@ -134,11 +135,25 @@ aws dynamodb create-table \
 
 aws dynamodb list-tables --region ap-south-1
 
-## add this bucket name in backend.tf
+## add this bucket name in backend.tf line 3
 
+ bucket         = "<your-bucket-name>"
 
-## Line number 26 update your-project-name
+## File .github/workflows/terraform.yml Line number 26 update <your-project-name> 
+
 
 role-to-assume: arn:aws:iam::<your-project-name>:role/GitHubActionsTerraformRole
 
----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+
+## for destroy resources # comment out apply command and for apply # comment out destroy command in .github/workflows/terraform.yml
+
+## Example for Destroy 
+
+  #- name: Terraform Apply
+        #if: github.ref == 'refs/heads/aws-basic'
+        #run: terraform apply -auto-approve
+
+      - name: Terraform Destroy
+        if: github.ref == 'refs/heads/aws-basic'
+        run: terraform destroy -auto-approve
