@@ -40,6 +40,8 @@ Terraform files already added
 
 ## Step 1 – Create OIDC Provider
 
+## Run these commands on AWS Cloud Shell
+
 aws iam create-open-id-connect-provider \
   --url https://token.actions.githubusercontent.com \
   --client-id-list sts.amazonaws.com \
