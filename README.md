@@ -2,10 +2,11 @@
 ## Objective
 
 Provision an AWS VPC in ap-south-1 using:
-Terraform
-GitHub Actions CI/CD
-OIDC authentication (no access keys)
-Remote state (S3 + DynamoDB)
+
+#Terraform
+#GitHub Actions CI/CD
+#OIDC authentication (no access keys)
+#Remote state (S3 + DynamoDB)
 
 AWS Account ID: <your-aws-account-project-id-required>
 Repository: MadhavSake/terraform-basic
