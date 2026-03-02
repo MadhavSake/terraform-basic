@@ -1,29 +1,136 @@
-Create one VM(Ubuntu) and run the following commands on vm
 
-#For ubuntu 
+## Objective
 
-cat /etc/os-release
-terraform
-sudo apt update && sudo apt upgrade -y
-sudo apt install -y wget unzip gnupg
+Provision an AWS VPC in ap-south-1 using:
+Terraform
+GitHub Actions CI/CD
+OIDC authentication (no access keys)
+Remote state (S3 + DynamoDB)
 
-wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
+AWS Account ID: <your-aws-account-project-id-required>
+Repository: MadhavSake/terraform-basic
+Branch: aws-basic
 
-echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com focal main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-sudo apt update
 
-sudo apt install -y terraform
 
-terraform -v
+## Resources:
 
-## Create one service account in GCP cloud for Terraform and provide the required access.
+1 VPC
+2 Public Subnets
+2 Private Subnets
+Internet Gateway
+NAT Gateway
+Route Tables
+S3 (Terraform state)
+DynamoDB (State locking)
 
-## download json file of this service account and paste it in the bastion host with .tf files and update file name in the provider.tf 
+## Prerequisites
+AWS Account Access
+IAM permissions to create:
 
-## Create bucket manually and update bucket name in backend.tf
+IAM roles
+OIDC provider
+S3 bucket
+DynamoDB table
 
-terraform init
+GitHub repository
+Terraform files already added
 
-terraform plan
+## Step 1 – Create OIDC Provider
 
-terraform apply
+aws iam create-open-id-connect-provider \
+  --url https://token.actions.githubusercontent.com \
+  --client-id-list sts.amazonaws.com \
+  --thumbprint-list 6938fd4d98bab03faadb97b34396831e3780aea1
+
+
+  ## Verify:
+
+  Expected: arn:aws:iam::<project-name>:oidc-provider/token.actions.githubusercontent.com
+
+
+  ## Step 2 – Create IAM Role for GitHub
+
+  cat <<EOF > trust-policy.json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Federated": "arn:aws:iam::582802577279:oidc-provider/token.actions.githubusercontent.com"
+      },
+      "Action": "sts:AssumeRoleWithWebIdentity",
+      "Condition": {
+        "StringEquals": {
+          "token.actions.githubusercontent.com:sub": "repo:MadhavSake/terraform-basic:ref:refs/heads/aws-basic",
+          "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
+        }
+      }
+    }
+  ]
+}
+EOF
+
+
+
+## Create role
+aws iam create-role \
+  --role-name GitHubActionsTerraformRole \
+  --assume-role-policy-document file://trust-policy.json
+
+
+## Attach permissions (initial testing) 
+aws iam attach-role-policy \
+  --role-name GitHubActionsTerraformRole \
+  --policy-arn arn:aws:iam::aws:policy/AdministratorAccess
+
+## Verify:
+aws iam list-attached-role-policies \
+  --role-name GitHubActionsTerraformRole
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+## Step 3 – Create Remote Backend##
+
+## Create S3 Bucket
+
+aws s3api create-bucket \
+  --bucket madhav-terraform-state-582802577279 \
+  --region ap-south-1 \
+  --create-bucket-configuration LocationConstraint=ap-south-1
+
+# Enable Versioning
+
+aws s3api put-bucket-versioning \
+  --bucket madhav-terraform-state-582802577279 \
+  --versioning-configuration Status=Enabled
+
+## Enable Encryption
+
+aws s3api put-bucket-encryption \
+  --bucket madhav-terraform-state-582802577279 \
+  --server-side-encryption-configuration '{
+    "Rules": [{
+      "ApplyServerSideEncryptionByDefault": {
+        "SSEAlgorithm": "AES256"
+      }
+    }]
+  }'
+
+## Create DynamoDB Table
+
+aws dynamodb create-table \
+  --table-name terraform-locks \
+  --attribute-definitions AttributeName=LockID,AttributeType=S \
+  --key-schema AttributeName=LockID,KeyType=HASH \
+  --billing-mode PAY_PER_REQUEST \
+  --region ap-south-1
+
+## Verify:
+
+aws dynamodb list-tables --region ap-south-1
+
+## add this bucket name in backend.tf
+
+---------------------------------------------------------------------------------------------------
