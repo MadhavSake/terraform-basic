@@ -1,25 +1,14 @@
+terraform {
+  required_version = ">= 1.5.0"
 
-# https://registry.terraform.io/providers/hashicorp/google/latest/docs
-# Set your GCP project ID and region
-provider "google" {
-  credentials = file("gcp-project-service-account-json-key.json")
-  project     = var.project
-  region      = var.region
-  zone        = var.zone
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
 }
 
-# https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/google_project_service
-resource "google_project_service" "compute" {
-  service                    = "compute.googleapis.com"
-  project                    = var.project
-  disable_dependent_services = true  # Add this line to disable dependent services
+provider "aws" {
+  region = var.aws_region
 }
-
-resource "google_project_service" "container" {
-  service = "container.googleapis.com"
-}
-
-resource "google_project_service" "cloudresourcemanager" {
-  service = "cloudresourcemanager.googleapis.com"
-}
-
